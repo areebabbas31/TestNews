@@ -1,41 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;
-using Test.Data;
-using Test.Models;
+using Microsoft.Data.SqlClient;
+
 
 namespace Test.Controllers
 {
     public class NewController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly string connectionString = "Server=localhost,1433;Database=Test;User Id=sa;Password=Qaz@xsw12;Encrypt=False";
 
-        public NewController(ApplicationDbContext db)
-        {
-            _db = db;
-        }
-
-        // GET: /Test
+        [HttpGet("/new")]
         public IActionResult Index()
         {
-            var news = _db.News.ToList();
-            return View(news);
-        }
+            var databases = new List<string>();
 
-        // GET: /Test/AddRandom
-        public IActionResult AddRandom()
-        {
-            var rnd = new Random();
-            var news = new New
+            using (var connection = new SqlConnection(connectionString))
             {
-                Number = rnd.Next(1, 1000) // random number between 1–999
-            };
+                connection.Open();
 
-            _db.News.Add(news);
-            _db.SaveChanges();
+                using (var command = new SqlCommand("SELECT name FROM sys.databases", connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        databases.Add(reader.GetString(0));
+                    }
+                }
+            }
 
-            return RedirectToAction(nameof(Index));
+            // Pass list to view
+            return View(databases);
         }
     }
 }
-
-
