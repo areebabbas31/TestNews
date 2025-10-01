@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ./*.sln ./
 
-COPY Test/Test.csproj Test/Test.csproj
+COPY ./Test.csproj ./Test.csproj
 RUN  dotnet restore ./Test.csproj
 
 
@@ -13,7 +13,7 @@ RUN  dotnet restore ./Test.csproj
 
 
 # Build and publish the solution
-RUN dotnet publish Test/Test.csproj -c Release -o /app/publish
+RUN dotnet publish ./Test.csproj -c Release -o /app/publish
 
 # Stage 2: Runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
