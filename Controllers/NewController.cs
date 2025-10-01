@@ -9,7 +9,7 @@ namespace Test.Controllers
 {
     public class NewController : Controller
     {
-        private readonly string connectionString = "Server=localhost,1433;Database=master;User Id=sa;Password=Qaz@xsw12;Encrypt=False;TrustServerCertificate=True";
+        private readonly string connectionString = "Server=sql,1433;Database=master;User Id=sa;Password=Qaz@xsw12;Encrypt=False;TrustServerCertificate=True";
 
 
         [HttpGet("/new")]
