@@ -28,5 +28,18 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+try
+{
+    var testConnectionString = "Server=sql,1433;Database=master;User Id=sa;Password=Qaz@xsw12;Encrypt=False;TrustServerCertificate=True";
+
+    using var conn = new SqlConnection(testConnectionString);
+    conn.Open();
+    Console.WriteLine(" Connected to SQL Server from inside container.");
+}
+catch (Exception ex)
+{
+    Console.WriteLine(" Could not connect to SQL Server.");
+    Console.WriteLine(ex.ToString());
+}
 
 app.Run();
