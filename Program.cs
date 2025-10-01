@@ -28,6 +28,17 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+try
+{
+    var connStr = "Server=sql,1433;Database=master;User Id=sa;Password=Qaz@xsw12;Encrypt=False;TrustServerCertificate=True;Connect Timeout=5;";
+    using var conn = new SqlConnection(connStr);
+    conn.Open();
+    Console.WriteLine("✅ SQL connection success!");
+}
+catch (Exception ex)
+{
+    Console.WriteLine("❌ SQL connection failed: " + ex.Message);
+}
 
 
 app.Run();
