@@ -20,7 +20,7 @@ namespace Test.Controllers
             {
                 connection.Open();
 
-                using (var command = new SqlCommand("SELECT name FROM sys.databases", connection))
+                using (var command = new SqlCommand("SELECT NewId FROM dbo.News", connection))
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
